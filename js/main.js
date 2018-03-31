@@ -138,26 +138,40 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  const button = document.createElement('button');
+  button.onclick = () => location.assign(DBHelper.urlForRestaurant(restaurant));
+  button.setAttribute("aria-label", `View ${restaurant.name} details`);
+  li.append(button);
+
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'restaurant-img-container';
+  li.append(imageContainer);
+
   const image = document.createElement('img');
-  image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  image.alt = restaurant.name;
+  imageContainer.append(image);
+
+  const infoContainer = document.createElement('div');
+  infoContainer.className = 'restaurant-info-container';
+  li.append(infoContainer);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  infoContainer.append(name);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  infoContainer.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  infoContainer.append(address);
 
   const more = document.createElement('a');
-  more.innerHTML = 'View Details';
+  more.innerHTML = 'View Details ›';
   more.href = DBHelper.urlForRestaurant(restaurant);
+  more.setAttribute("aria-label", `View ${restaurant.name} details`);
   li.append(more)
 
   return li
