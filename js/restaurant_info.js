@@ -56,8 +56,18 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.className = 'restaurant-img';
+  image.src = `/img/${restaurant.id}-800x600.jpg`;
+  image.srcset = `
+    /img/${restaurant.id}-200x150.jpg 200w,
+    /img/${restaurant.id}-400x300.jpg 400w,
+    /img/${restaurant.id}-800x600.jpg 800w
+  `;
+  image.sizes = `
+    (max-width: 600px) 560px,
+    570px
+  `;
+  image.alt = restaurant.name;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -75,6 +85,19 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+
+  const row = document.createElement('tr');
+
+  const day = document.createElement('th');
+  day.innerHTML = "Day";
+  row.appendChild(day);
+
+  const time = document.createElement('th');
+  time.innerHTML = "Operating hours";
+  row.appendChild(time);
+
+  hours.appendChild(row);
+
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
@@ -117,21 +140,25 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+
+  const div = document.createElement('div');
+  li.appendChild(div);
+
   const name = document.createElement('p');
   name.innerHTML = review.name;
-  li.appendChild(name);
+  div.appendChild(name);
 
   const date = document.createElement('p');
   date.innerHTML = review.date;
-  li.appendChild(date);
+  div.appendChild(date);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
-  li.appendChild(rating);
+  div.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
-  li.appendChild(comments);
+  div.appendChild(comments);
 
   return li;
 }

@@ -1,6 +1,6 @@
 let lastScrollTop = 0;
 const fixedElement = document.getElementById("filter-options");
-const scrollableElement = document.querySelector("main");
+const scrollableElement = document.getElementById("content");
 
 scrollableElement.addEventListener("scroll", event => {
   const currentScrollTop = scrollableElement.scrollTop;

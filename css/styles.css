@@ -11,13 +11,13 @@ body {
 	background-color: #fdfdfd;
 	margin: 0;
   position:relative;
-  height: 100vh;
+  height: calc(100vh - 80px);
   width: 100vw;
   overflow: hidden;
   padding-top: 80px;
-  padding-bottom: 90px;
   display: flex;
   flex-direction: column;
+  min-width: 300px;
 }
 
 body > header {
@@ -51,19 +51,31 @@ h1, h2, h3, h4, h5, h6 {
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-#maincontent {
+th {
+  text-align: left;
+  font-weight: 600;
+}
+#content {
   background-color: #f3f3f3;
   overflow-y: auto;
   height: 100%;
 }
 #footer {
-  background-color: #444;
-  color: #aaa;
-  font-size: 8pt;
-  letter-spacing: 1px;
+  font-size: 14px;
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
+  border-top: 1px rgb(233, 233, 233) solid;
+}
+
+@media screen and (min-width: 601px) {
+  #footer {
+    background-color: #fff;
+  }
+
+  br {
+    display: none;
+  }
 }
 
 html.wf-active body,
@@ -96,12 +108,13 @@ nav h1 a {
   font-weight: 200;
 }
 #breadcrumb {
-    padding: 10px 40px 16px;
+    padding: 10px 20px 16px;
     list-style: none;
-    background-color: #eee;
+    background-color: #fff;
     font-size: 17px;
     margin: 0;
-    width: calc(50% - 80px);
+    box-shadow: rgb(101, 119, 134) 0px 0px 4px;
+    height: 20px;
 }
 
 /* Display list items side by side */
@@ -141,7 +154,7 @@ nav h1 a {
 }
 
 @media screen and (min-width: 1200px) {
-  #map-container {
+  body:not(.inside) #map-container {
     background: #41434a;
   }
 
@@ -222,7 +235,6 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
@@ -283,7 +295,7 @@ nav h1 a {
 }
 
 #restaurants-list li a {
-  font-size: 10pt;
+  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -292,16 +304,23 @@ nav h1 a {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 #restaurants-list .restaurant-img-container img {
   width: 100%;
-  height: auto;
+  height: auto;position: absolute;
+  top: -100%;
+  left: -100%;
+  right: -100%;
+  bottom: -100%;
+  margin: auto;
 }
 
 @media screen and (max-width: 600px) {
   #restaurants-list {
-    padding: 0;
+    background-color: #fff;
+    padding: 20px 0;
   }
   
   #restaurants-list li {
@@ -379,91 +398,160 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Details ====================== */
+body.inside {
+  padding-top: 126px;
+  height: calc(100vh - 126px);
+}
+
 .inside header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
+  height: 126px;
 }
+
+.inside nav {
+  height: 80px;
+}
+
+.inside #content {
+  display: flex;
+  flex-direction: column;
+}
+
+.inside #restaurant-info {
+  display: flex;
+}
+
 .inside #map-container {
-  background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
-  right: 0;
-  top: 80px;
   width: 50%;
+  padding: 69px 20px 20px 0px;
 }
+
 .inside #map {
   background-color: #ccc;
   height: 100%;
   width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 15px;
+  border-radius: 2px;
 }
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-}
+
 #restaurant-name {
-  font-size: 20pt;
+  font-size: 26px;
+  margin-bottom: 10px;
   font-weight: 200;
-  letter-spacing: 0;
-  margin: 15px 0 30px;
-  text-transform: uppercase;
-  line-height: 1.1;
 }
 #restaurant-img {
-	width: 90%;
+  width: 100%;
+  border-radius: 2px;
 }
 #restaurant-address {
-  font-size: 12pt;
+  font-size: 20px;
   margin: 10px 0px;
+  font-weight: 600;
 }
 #restaurant-cuisine {
-  background-color: #333;
-  color: #ddd;
   font-size: 12pt;
-  font-weight: 300;
-  letter-spacing: 10px;
+  font-weight: 900;
   margin: 0 0 20px;
   padding: 2px 0;
   text-align: center;
-  text-transform: uppercase;
-	width: 90%;
+	width: 100%;
 }
-#restaurant-container, #reviews-container {
-  border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #fff;
-  padding: 140px 40px 30px;
+#restaurant-container {
+  padding: 20px;
   width: 50%;
 }
-#reviews-container {
-  padding: 30px 40px 80px;
-}
+
 #reviews-container h2 {
-  color: #f58500;
-  font-size: 24pt;
-  font-weight: 300;
-  letter-spacing: -1px;
+  font-size: 22px;
+  font-weight: 200;
   padding-bottom: 1pt;
 }
 #reviews-list {
   margin: 0;
   padding: 0;
 }
+
 #reviews-list li {
-  background-color: #fff;
-    border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
-  margin: 0 0 30px;
+  margin: 0;
   overflow: hidden;
-  padding: 0 20px 20px;
-  position: relative;
-  width: 85%;
+  padding: 20px;
 }
+
+#reviews-list li > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #reviews-list li p {
   margin: 0 0 10px;
 }
-#restaurant-hours td {
-  color: #666;
+
+#reviews-list li p:not(:last-child) {
+  font-weight: 600;
+}
+
+#restaurant-hours td:first-child,
+#restaurant-hours th:first-child {
+  width: 90px;
+}
+
+.inside #reviews-container {
+  background-color: #fff;
+  padding: 0;
+  border-top: 1px solid #d9d9d9;
+}
+
+.inside #reviews-container h2 {
+  padding: 20px 20px 0;
+}
+
+.inside #reviews-list li:not(:last-child) {
+  border-bottom: 1px rgb(233, 233, 233) solid;
+}
+
+@media screen and (max-width: 600px) {
+  .inside #restaurant-info {
+    flex-direction: column;
+    box-sizing: content-box;
+  }
+
+  .inside #restaurant-container {
+    width: auto;
+  }
+
+  .inside #map-container {
+    width: auto;
+    height: 250px;
+    padding: 0;
+    border-top: 1px solid #d9d9d9;
+  }
+
+  .inside #map {
+    box-shadow: none;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  .inside #reviews-container {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .inside #reviews-container h2 {
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .inside #restaurant-info {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
