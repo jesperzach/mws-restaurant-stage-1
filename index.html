@@ -52,6 +52,12 @@
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZo-8xldNeNHWU9y7YbD_PwLZeoJlKFMY&libraries=places&callback=initMap"></script>
 
   <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+
     WebFontConfig = {
       google: {
         families: ['Roboto']
