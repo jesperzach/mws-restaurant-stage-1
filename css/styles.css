@@ -35,11 +35,11 @@ ul, li {
 	color: #333;
 }
 a {
-	color: rgb(77, 144, 254);
+	color: #0159A6;
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: rgb(77, 160, 254);
+	text-decoration: underline;
 }
 a img{
 	border: none 0px #fff;
@@ -60,12 +60,17 @@ th {
   overflow-y: auto;
   height: 100%;
 }
+
 #footer {
   font-size: 14px;
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
   border-top: 1px rgb(233, 233, 233) solid;
+}
+
+#footer a {
+  font-weight: 500;
 }
 
 @media screen and (min-width: 601px) {
@@ -89,7 +94,8 @@ html.wf-active h2,
 html.wf-active h3,
 html.wf-active h4,
 html.wf-active h5,
-html.wf-active h6 {
+html.wf-active h6,
+html.wf-active select {
   font-family: "Roboto";
 }
 /* ====================== Navigation ====================== */
@@ -259,7 +265,7 @@ nav h1 a {
   padding: 0 0 0 20px;
 }
 
-#restaurants-list li h1 {
+#restaurants-list li h3 {
   font-weight: 500;
   font-size: 17px;
   margin: 0;
@@ -297,6 +303,12 @@ nav h1 a {
 #restaurants-list li a {
   font-size: 14px;
   text-transform: uppercase;
+  font-weight: 500;
+}
+
+#restaurants-list li a:focus {
+  box-shadow: rgb(77, 144, 254) 0px 0px 2px 2px;
+  outline: 0;
 }
 
 #restaurants-list .restaurant-img-container {

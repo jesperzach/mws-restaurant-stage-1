@@ -166,7 +166,7 @@ createRestaurantHTML = (restaurant) => {
   infoContainer.className = 'restaurant-info-container';
   li.append(infoContainer);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
   infoContainer.append(name);
 
