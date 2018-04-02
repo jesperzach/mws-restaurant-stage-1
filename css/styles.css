@@ -98,6 +98,25 @@ html.wf-active h6,
 html.wf-active select {
   font-family: "Roboto";
 }
+
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: auto;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  z-index: 1;
+  background-color: #fff;
+  padding: 10px;
+}
+
 /* ====================== Navigation ====================== */
 nav {
   height: 100%;
@@ -472,7 +491,7 @@ body.inside {
   width: 50%;
 }
 
-#reviews-container h2 {
+#reviews-container h3 {
   font-size: 22px;
   font-weight: 200;
   padding-bottom: 1pt;
@@ -518,7 +537,7 @@ body.inside {
   border-top: 1px solid #d9d9d9;
 }
 
-.inside #reviews-container h2 {
+.inside #reviews-container h3 {
   padding: 20px 20px 0;
 }
 
@@ -555,7 +574,7 @@ body.inside {
 }
 
 @media screen and (min-width: 800px) {
-  .inside #reviews-container h2 {
+  .inside #reviews-container h3 {
     text-align: center;
   }
 }
