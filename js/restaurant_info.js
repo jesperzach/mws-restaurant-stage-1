@@ -67,7 +67,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     (max-width: 600px) 560px,
     570px
   `;
-  image.alt = restaurant.photograph_description;
+  image.alt = `The ${restaurant.name} restaurant`;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;

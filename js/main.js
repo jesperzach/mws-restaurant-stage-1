@@ -159,7 +159,7 @@ createRestaurantHTML = (restaurant) => {
     (max-width: 930px) 420px,
     370px
   `;
-  image.alt = restaurant.photograph_description;
+  image.alt = `The ${restaurant.name} restaurant`;
   imageContainer.append(image);
 
   const infoContainer = document.createElement('div');

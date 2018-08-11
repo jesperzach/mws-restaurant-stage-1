@@ -1,15 +1,20 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.1/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js');
 
 workbox.skipWaiting();
 workbox.clientsClaim();
 
 workbox.routing.registerRoute(
-  /\.(?:html|js|css)(\?.*)?$/,
+  /\/$/,
   workbox.strategies.staleWhileRevalidate(),
 );
 
 workbox.routing.registerRoute(
-  /\/data/,
+  /\.(?:html|js|json|css)(\?.*)?$/,
+  workbox.strategies.staleWhileRevalidate(),
+);
+
+workbox.routing.registerRoute(
+  new RegExp('^http://localhost:1337/(.*)'),
   workbox.strategies.staleWhileRevalidate(),
   'GET'
 );
