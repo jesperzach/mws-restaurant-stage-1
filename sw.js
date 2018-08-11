@@ -26,8 +26,3 @@ workbox.routing.registerRoute(
     ]
   })
 );
-
-workbox.routing.registerRoute(
-  new RegExp('^https://fonts.(?:googleapis|gstatic).com/(.*)'),
-  workbox.strategies.cacheFirst(),
-);

@@ -83,22 +83,6 @@ th {
   }
 }
 
-html.wf-active body,
-html.wf-active th,
-html.wf-active td,
-html.wf-active p,
-html.wf-active ul,
-html.wf-active li,
-html.wf-active h1,
-html.wf-active h2,
-html.wf-active h3,
-html.wf-active h4,
-html.wf-active h5,
-html.wf-active h6,
-html.wf-active select {
-  font-family: "Roboto";
-}
-
 .skip-link {
   position: absolute;
   left: -10000px;
