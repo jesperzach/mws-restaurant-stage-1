@@ -72,6 +72,40 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
+  const favoriteButton = document.createElement('button');
+  const isFavorite = restaurant.is_favorite.toString() === "true" // Need to typecast due to bug in backend
+
+  favoriteButton.className = isFavorite
+    ? 'favorite-button favorite-button-on'
+    : 'favorite-button favorite-button-off';
+
+  favoriteButton.innerHTML = '⭐';
+
+  favoriteButton.setAttribute(
+    'aria-label',
+    isFavorite
+      ? `Remove ${restaurant.name} from favorites`
+      : `Add ${restaurant.name} to favorites`
+  );
+
+  favoriteButton.onclick = () => {
+    const response = DBHelper.favoriteRestaurantById(restaurant.id, !isFavorite);
+
+    response.then(
+      result => {
+        if (result.ok) {
+          favoriteButton.classList.toggle("favorite-button-on");
+          favoriteButton.classList.toggle("favorite-button-off");
+        }
+      }
+    ).catch(error => {
+        favoriteButton.classList.toggle("favorite-button-on");
+        favoriteButton.classList.toggle("favorite-button-off");
+    });
+  };
+
+  document.getElementById('restaurant-info').append(favoriteButton);
+
   // fill operating hours
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();

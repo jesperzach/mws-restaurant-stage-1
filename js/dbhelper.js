@@ -2,14 +2,18 @@
  * Common database helper functions.
  */
 class DBHelper {
+  /** The database endpoint. */
+  static get ENDPOINT() {
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}`;
+  }
 
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `${DBHelper.ENDPOINT}/restaurants`;
   }
 
   /**
@@ -48,6 +52,16 @@ class DBHelper {
         }
       }
     });
+  }
+
+  /**
+   * Favorite or unfavorite a restaurant by its ID.
+   */
+  static favoriteRestaurantById(id, favorite) {
+    return fetch(
+      `${DBHelper.DATABASE_URL}/${id}/?is_favorite=${favorite.toString()}`,
+      { method: "PUT" }
+    );
   }
 
   /**

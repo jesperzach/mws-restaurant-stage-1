@@ -332,6 +332,39 @@ nav h1 a {
   margin: auto;
 }
 
+.favorite-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 24px;
+  padding: 5px;
+  transition: 150ms all ease-in-out;
+  background: transparent;
+  border: 0 none;
+  cursor: pointer;
+}
+
+.favorite-button.favorite-button-off {
+  filter: grayscale(100%) opacity(70%);
+}
+
+.favorite-button.favorite-button-off:hover {
+  filter: none;
+}
+
+.favorite-button.favorite-button-on {
+  filter: none;
+}
+
+.favorite-button.favorite-button-on:hover {
+  filter: grayscale(100%) opacity(70%);
+}
+
+.favorite-button:focus {
+  outline: 0;
+  box-shadow: rgb(77, 144, 254) 0px 0px 2px 2px;
+}
+
 @media screen and (max-width: 600px) {
   #restaurants-list {
     background-color: #fff;
@@ -352,6 +385,11 @@ nav h1 a {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+  }
+
+  #restaurants-list .favorite-button {
+    top: 7px;
+    right: 7px;
   }
 
   #restaurants-list .restaurant-img {
@@ -433,6 +471,12 @@ body.inside {
 
 .inside #restaurant-info {
   display: flex;
+  position: relative;
+}
+
+#restaurant-info .favorite-button {
+  margin-top: 15px;
+  margin-right: 10px;
 }
 
 .inside #map-container {

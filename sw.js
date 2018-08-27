@@ -31,3 +31,23 @@ workbox.routing.registerRoute(
     ]
   })
 );
+
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('restaurantQueue', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+});
+
+workbox.routing.registerRoute(
+  new RegExp('^http://localhost:1337/(.*)'),
+  workbox.strategies.networkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'POST'
+);
+
+workbox.routing.registerRoute(
+  new RegExp('^http://localhost:1337/(.*)'),
+  workbox.strategies.networkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'PUT'
+);
