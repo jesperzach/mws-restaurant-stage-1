@@ -5,7 +5,7 @@ var map;
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
+  fetchRestaurantAndReviewsFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
     } else {
@@ -21,9 +21,9 @@ window.initMap = () => {
 }
 
 /**
- * Get current restaurant from page URL.
+ * Get current restaurant and reviews from page URL.
  */
-fetchRestaurantFromURL = (callback) => {
+fetchRestaurantAndReviewsFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant)
     return;
@@ -42,6 +42,9 @@ fetchRestaurantFromURL = (callback) => {
       fillRestaurantHTML();
       callback(null, restaurant)
     });
+    DBHelper.fetchReviewsByRestaurantId(id)
+      .then(result => result.json())
+      .then(fillReviewsHTML);
   }
 }
 
@@ -110,8 +113,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
 }
 
 /**
@@ -147,14 +148,53 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   }
 }
 
+submitWriteReviewForm = event => {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const data = {};
+
+  for (const entry of formData.entries()) {
+    data[entry[0]] = entry[1];
+  }
+
+  DBHelper.createReviewForRestaurantWithId(self.restaurant.id, data)
+    .then(response => response.json())
+    .then(addReviewHTML)
+    .then(clearAddReviewForm)
+    .catch(error => {
+      addReviewHTML({
+        // Network is down...
+        // Add review anyway, with some dummy data, and replay request when online
+        ...data,
+        restaurant_id: self.restaurant.id,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      clearAddReviewForm();
+    });
+};
+
+addReviewHTML = review => {
+  const ul = document.getElementById('reviews-list');
+  ul.appendChild(createReviewHTML(review));
+};
+
+clearAddReviewForm = () => {
+  const writeReviewForm = document.getElementById("write-review-form");
+  writeReviewForm.reset();
+};
+
 /**
  * Create all reviews HTML and add them to the webpage.
+ * Hookup submit review event handler.
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+  const writeReviewForm = document.getElementById("write-review-form");
+  writeReviewForm.onsubmit = submitWriteReviewForm;
+
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h3');
-  title.innerHTML = 'Reviews';
-  container.appendChild(title);
 
   if (!reviews) {
     const noReviews = document.createElement('p');
@@ -166,7 +206,6 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
-  container.appendChild(ul);
 }
 
 /**
@@ -183,7 +222,7 @@ createReviewHTML = (review) => {
   div.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.createdAt).toLocaleString();
   div.appendChild(date);
 
   const rating = document.createElement('p');

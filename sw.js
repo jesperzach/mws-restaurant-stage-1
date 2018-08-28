@@ -14,7 +14,13 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  new RegExp('^http://localhost:1337/(.*)'),
+  new RegExp('^http://localhost:1337/reviews/(.*)'),
+  workbox.strategies.networkFirst(),
+  'GET'
+);
+
+workbox.routing.registerRoute(
+  new RegExp('^http://localhost:1337/restaurants/(.*)'),
   workbox.strategies.staleWhileRevalidate(),
   'GET'
 );

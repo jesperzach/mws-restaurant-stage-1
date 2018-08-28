@@ -55,12 +55,35 @@ class DBHelper {
   }
 
   /**
+   * Fetch reviews by restaurant ID.
+   */
+  static fetchReviewsByRestaurantId(id) {
+    return fetch(`${DBHelper.ENDPOINT}/reviews/?restaurant_id=${id}`);
+  }
+
+  /**
    * Favorite or unfavorite a restaurant by its ID.
    */
   static favoriteRestaurantById(id, favorite) {
     return fetch(
       `${DBHelper.DATABASE_URL}/${id}/?is_favorite=${favorite.toString()}`,
       { method: "PUT" }
+    );
+  }
+
+  /**
+   * Post review for a restaurant by its ID.
+   */
+  static createReviewForRestaurantWithId(restaurant_id, data) {
+    return fetch(
+      `${DBHelper.ENDPOINT}/reviews/`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          ...data,
+          restaurant_id
+        })
+      }
     );
   }
 
